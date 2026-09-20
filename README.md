@@ -173,9 +173,16 @@ never drift out of step — add a section there and everything follows.
 ### Theming
 
 Colours are CSS custom properties on `:root`, redefined under
-`:root[data-theme="dark"]`. Light is the default; the toggle writes to
-`localStorage` and a blocking script in `layout.tsx` applies the stored choice
-before first paint, so there is no flash.
+`:root[data-theme="dark"]`.
+
+**Light is the first impression for everyone.** The blocking script in
+`layout.tsx` deliberately ignores the OS `prefers-color-scheme`: a visitor whose
+machine is in dark mode still lands on white. Dark is opt-in through the toggle,
+and only a choice made there is stored in `localStorage` and reapplied before
+first paint, so a returning visitor never sees a flash of the wrong theme.
+
+If you are testing and the page keeps opening dark, you toggled it at some
+point — click the toggle once, or clear the site's local storage.
 
 One accent (`--accent`, blue) carries every link, metric and active state.
 `--ember` is a second hue used **only** as a marker — the status dot, the full stop

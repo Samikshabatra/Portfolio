@@ -66,18 +66,19 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#111211" },
-  ],
-  colorScheme: "light dark",
+  themeColor: "#ffffff",
+  colorScheme: "light",
 };
 
 /**
- * Runs before first paint so the stored theme wins without a flash.
- * Light is the default; dark only when explicitly chosen or preferred.
+ * Runs before first paint, so a returning visitor's choice applies without a
+ * flash of the wrong theme.
+ *
+ * The OS `prefers-color-scheme` is deliberately ignored. Light is the intended
+ * first impression for everyone, whatever their machine is set to; dark is an
+ * option you opt into with the toggle, and only then does it persist.
  */
-const themeBootstrap = `(function(){try{var s=localStorage.getItem("theme");var t=s||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","light");}})();`;
+const themeBootstrap = `(function(){try{var s=localStorage.getItem("theme");document.documentElement.setAttribute("data-theme",s==="dark"?"dark":"light");}catch(e){document.documentElement.setAttribute("data-theme","light");}})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
