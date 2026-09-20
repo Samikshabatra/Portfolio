@@ -1,0 +1,212 @@
+@import "tailwindcss";
+
+/* Theme is driven by data-theme on <html>, set before paint by a blocking
+   script in layout.tsx. Tokens do the work; almost nothing needs a dark: variant. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ---------------------------------------------------------------- tokens */
+
+/* Warm paper, near-black ink, one blue accent. Ember is a second hue used
+   only as a marker — a status dot, a full stop — never for text you must read. */
+:root {
+  --paper: #f7f5f1;
+  --paper-raised: #ffffff;
+  --paper-sunk: #efece6;
+  --line: #e2ddd4;
+  --line-strong: #c4bcae;
+  --ink: #17171a;
+  --ink-muted: #6b6760;
+  --accent: #1b5e9c;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(27, 94, 156, 0.09);
+  --accent-line: rgba(27, 94, 156, 0.28);
+  --ember: #c2570e;
+  --focus: #1b5e9c;
+
+  /* Contribution heat scale. Steps toward --accent, not a separate hue. */
+  --heat-0: #e6e2da;
+  --heat-1: #bcd0e2;
+  --heat-2: #85aed0;
+  --heat-3: #4a86ba;
+  --heat-4: #1b5e9c;
+}
+
+:root[data-theme="dark"] {
+  --paper: #111211;
+  --paper-raised: #1a1b1a;
+  --paper-sunk: #0b0c0b;
+  --line: #2a2b29;
+  --line-strong: #474946;
+  --ink: #edeae4;
+  --ink-muted: #9a968d;
+  --accent: #7cb7ef;
+  --accent-ink: #0b1b2a;
+  --accent-soft: rgba(124, 183, 239, 0.12);
+  --accent-line: rgba(124, 183, 239, 0.3);
+  --ember: #e8944a;
+  --focus: #7cb7ef;
+
+  --heat-0: #1e201e;
+  --heat-1: #22415c;
+  --heat-2: #33648f;
+  --heat-3: #518cc2;
+  --heat-4: #7cb7ef;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-raised: var(--paper-raised);
+  --color-sunk: var(--paper-sunk);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-muted: var(--ink-muted);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-line: var(--accent-line);
+  --color-ember: var(--ember);
+
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+
+  /* Fluid via clamp() rather than breakpoint overrides, so the sizes hold
+     wherever Tailwind inlines them. */
+  --text-micro: 0.6875rem;
+  --text-micro--line-height: 1.45;
+  --text-small: 0.8125rem;
+  --text-small--line-height: 1.6;
+  --text-body: 0.9375rem;
+  --text-body--line-height: 1.72;
+  --text-lead: clamp(1.0625rem, 0.95rem + 0.5vw, 1.25rem);
+  --text-lead--line-height: 1.55;
+  --text-h3: clamp(1.125rem, 1rem + 0.6vw, 1.375rem);
+  --text-h3--line-height: 1.25;
+  --text-h2: clamp(1.75rem, 1.3rem + 2vw, 2.5rem);
+  --text-h2--line-height: 1.08;
+  --text-display: clamp(3rem, 1.2rem + 7.6vw, 5.75rem);
+  --text-display--line-height: 0.92;
+}
+
+/* ------------------------------------------------------------------ base */
+
+/* No universal border-color rule here on purpose. Everything in this file is
+   unlayered, so a `* { border-color }` would outrank every Tailwind border
+   utility — including `hover:border-accent-line`. Borders name their colour. */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  /* next/font emits these on <body>. Referencing the @theme token would not
+     work: `@theme inline` inlines values into utilities and never emits
+     --font-sans as a real custom property. */
+  font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  font-size: var(--text-body);
+  line-height: 1.72;
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+/* Display voice: a high-contrast serif, set large and tight. */
+.display {
+  font-family: var(--font-instrument), ui-serif, Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.display-italic {
+  font-family: var(--font-instrument), ui-serif, Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* Small tracked label. Eyebrows and gutter numbers only. */
+.label {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Numbers are content here — always tabular so columns line up. */
+.readout {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "zero" 1;
+  letter-spacing: -0.02em;
+}
+
+.prose-measure {
+  max-width: 64ch;
+}
+
+/* ------------------------------------------------------- one motion beat */
+
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes rule-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.animate-settle {
+  animation: settle 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-rule {
+  transform-origin: left;
+  animation: rule-draw 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none;
+  }
+}
