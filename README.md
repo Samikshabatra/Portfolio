@@ -116,14 +116,29 @@ InVision, ClipIt, RAG Pipeline Debugger and RADAR. To add one:
 
 ### The activity graph
 
-`src/app/api/contributions/route.ts` proxies a public, unauthenticated mirror of
-GitHub's contribution data and revalidates hourly, so the graph is at most a day
-stale and needs no token. GitHub's own endpoint is unusable here: the GraphQL
-API requires authentication, and the HTML graph sends no CORS headers.
+`src/app/api/contributions/route.ts` has two sources and falls through in order:
 
-If the upstream disappears, the route returns an empty set and the section
-degrades to a link to the profile — it will not break the page or the build.
-Swap `UPSTREAM` for another mirror if you ever need to.
+1. **GitHub's GraphQL API**, used when `GITHUB_TOKEN` is set. Same data that
+   draws the graph on the profile page, current within minutes.
+2. **A public mirror**, used when there is no token. It scrapes the profile page
+   on its own schedule and can run a day or more behind.
+
+Neither can be called from the browser: the REST API has no contributions
+endpoint, the GraphQL endpoint rejects unauthenticated requests even for public
+profiles, and the HTML graph sends no CORS headers. Hence the route.
+
+**To get live data**, add a token in Vercel → Settings → Environment Variables:
+
+- Name `GITHUB_TOKEN`, any environment.
+- Create it at github.com/settings/tokens as a **fine-grained** token with
+  **no repository access and no account permissions** — reading a public
+  profile's contribution calendar needs a valid token, not a privileged one.
+- Redeploy. The panel then reads "Live from GitHub" instead of naming the
+  mirror.
+
+Both paths are cached for ten minutes. If every source fails the route returns
+an empty set and the section degrades to a link to the profile — it will not
+break the page or the build.
 
 ## Deploying to Vercel
 

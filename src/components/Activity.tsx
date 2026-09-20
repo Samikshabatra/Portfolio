@@ -7,7 +7,12 @@ import { Section } from "./Section";
 import { GithubIcon } from "./BrandIcons";
 
 type Day = { date: string; count: number; level: 0 | 1 | 2 | 3 | 4 };
-type Payload = { total: number; days: Day[]; ok: boolean };
+type Payload = {
+  total: number;
+  days: Day[];
+  ok: boolean;
+  source: "github" | "mirror" | "none";
+};
 
 const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
@@ -225,7 +230,11 @@ export function Activity() {
         ) : null}
 
         <div className="flex items-center justify-between gap-4 border-t border-line px-4 py-2.5 text-micro text-muted sm:px-5">
-          <span>Pulled from GitHub, refreshed hourly.</span>
+          <span>
+            {data?.source === "github"
+              ? "Live from GitHub, refreshed every 10 minutes."
+              : "From a public GitHub mirror, which can lag a day behind."}
+          </span>
           <span className="flex items-center gap-1.5">
             Less
             {[0, 1, 2, 3, 4].map((l) => (
