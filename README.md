@@ -2,6 +2,8 @@
 
 Personal portfolio for Samiksha Batra — AI/ML Engineer.
 
+**Live:** <https://portfolio-fat60xp9g-samikshas-projects-2fe90868.vercel.app>
+
 Next.js 16 (App Router) · TypeScript · Tailwind v4. Prerendered throughout, with one
 hourly-revalidated route for the live GitHub activity graph.
 
@@ -80,11 +82,17 @@ space, so adding the photo shifts nothing.
 
 Replace `public/resume.pdf`. Both the hero and the contact section link to it.
 
-### Before the first deploy
+### Setting the canonical URL
 
-Set `siteUrl` in `src/data/profile.ts` to the real domain. It feeds canonical
-URLs, Open Graph tags, `sitemap.xml`, `robots.txt` and the JSON-LD `Person`
-block, so leaving the placeholder there will publish the wrong URLs.
+`siteUrl` in `src/data/profile.ts` feeds canonical URLs, Open Graph tags,
+`sitemap.xml`, `robots.txt` and the JSON-LD `Person` block. It is still the
+placeholder, and it needs the **stable production alias** — not the URL above.
+
+The deployed link contains a build hash (`fat60xp9g`), which means Vercel minted
+it for one deployment and it changes on the next push. Vercel also assigns a
+permanent alias per project, listed under **Project → Domains**. Put that one in
+`siteUrl`, or a custom domain once there is one, and redeploy. A canonical tag
+pointing at a URL that expires is worse than no canonical tag.
 
 ### Project covers
 
