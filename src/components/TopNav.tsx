@@ -6,12 +6,12 @@ import { sections } from "@/data/sections";
 import { profile } from "@/data/profile";
 import { ThemeToggle } from "./ThemeToggle";
 
-const jumpTo = sections.filter((s) => s.id !== "top");
+const jumpTo = sections;
 
 /**
- * The only persistent chrome. Carries the monogram, the section links and the
- * one action that matters, and reports which section you are in — the hero's
- * numbered index scrolls away, so this has to hold orientation after that.
+ * The only persistent chrome: the section links and the one action that matters.
+ * It reports which section you are in, because the hero's numbered index scrolls
+ * away and nothing else on the page holds orientation after that.
  */
 export function TopNav() {
   const [active, setActive] = useState("top");
@@ -41,15 +41,7 @@ export function TopNav() {
         aria-label="Sections"
         className="mx-auto flex max-w-[84rem] items-center justify-between gap-6 px-5 py-3 sm:px-8 lg:px-12"
       >
-        <a
-          href="#top"
-          className="display text-lead leading-none tracking-tight"
-          aria-label={`${profile.name} — back to top`}
-        >
-          SB
-        </a>
-
-        <ul className="hidden items-center gap-7 lg:flex">
+        <ul className="hidden items-center gap-6 lg:flex xl:gap-7">
           {jumpTo.map((s) => {
             const isActive = active === s.id;
             return (
@@ -67,7 +59,7 @@ export function TopNav() {
           })}
         </ul>
 
-        <div className="flex items-center gap-2.5">
+        <div className="ml-auto flex items-center gap-2.5">
           <a
             href={`mailto:${profile.email}`}
             className="inline-flex items-center gap-1.5 bg-ink px-3.5 py-2 text-small font-medium text-paper transition-opacity hover:opacity-85"
