@@ -1,8 +1,6 @@
-# samikshabatra.dev
+# Personal portfolio for Samiksha Batra — AI/ML Engineer.
 
-Personal portfolio for Samiksha Batra — AI/ML Engineer.
-
-**Live:** <https://portfolio-fat60xp9g-samikshas-projects-2fe90868.vercel.app>
+**Live:** <https://portfolio-six-vert-88.vercel.app/>
 
 Next.js 16 (App Router) · TypeScript · Tailwind v4. Prerendered throughout, with one
 hourly-revalidated route for the live GitHub activity graph.
