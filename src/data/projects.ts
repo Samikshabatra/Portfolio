@@ -68,6 +68,7 @@ export const projects: Project[] = [
     cover: "/projects/cybersentinel.webp",
     coverAlt: "The CyberSentinel threat analysis console showing incident volume and severity mix",
     repo: "https://github.com/Samikshabatra/CyberSentinel",
+    demo: "https://cybersentinel-79bcvw2c2uyrlmj9thd2bu.streamlit.app",
   },
   {
     slug: "market-intelligence-agent",
