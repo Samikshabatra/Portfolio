@@ -105,7 +105,7 @@ nobody mistakes it for a running app.
 
 Three covers are real screenshots today: the Credit Risk platform (captured from its
 live Streamlit deployment), CyberSentinel (`docs/screenshots/` in its repo) and
-StatusForge (its n8n canvas). **Five still need one:** Market Intelligence Agent,
+StatusForge (its live Streamlit dashboard). **Five still need one:** Market Intelligence Agent,
 InVision, ClipIt, RAG Pipeline Debugger and RADAR. To add one:
 
 1. Run the project, screenshot its interface at roughly 1440×900.

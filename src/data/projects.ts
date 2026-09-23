@@ -104,8 +104,9 @@ export const projects: Project[] = [
     pipeline: ["validate", "analyse", "supervise", "rank", "verify", "post"],
     cover: "/projects/statusforge.webp",
     coverAlt:
-      "The StatusForge workflow open in the n8n editor, showing the agent graph and a successful run",
+      "The StatusForge dashboard showing the daily Slack digest preview and roadmap health counts",
     repo: "https://github.com/Samikshabatra/statusforge",
+    demo: "https://statusforge-hnr6zkh3p4ajcoglkwu7dh.streamlit.app",
   },
   {
     slug: "invision",
